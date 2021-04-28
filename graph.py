@@ -79,6 +79,7 @@ class Graph:
         return self.edges[current_node][next_node]
     
     def return_random_next_not_zero(self, already_visited):
+
         possibles = [i for i in range(1,self.number_of_nodes)]
         return_possibles = []
         for node in possibles:
