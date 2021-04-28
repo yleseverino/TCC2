@@ -15,7 +15,7 @@ class Graph:
     
     """
 
-    def __init__(self, number_of_nodes: int = 0, filename: str = 'graph_artigo'):
+    def __init__(self, number_of_nodes: int = 0, filename: str = 'eil51.tsp'):
 
         if filename:
             self.load(filename)
@@ -66,6 +66,8 @@ class Graph:
                 return self.edges[node_from,0]
     
     def save(self, filename):
+        '''Salva o grafo na pasta graphs'''
+
         with open(f'graphs/{filename}.npy', 'wb') as f:
             np.save(f,self.edges)
     
@@ -74,18 +76,14 @@ class Graph:
             self.edges = np.load(f)
             self.number_of_nodes = len(self.edges) - 1
     
-    # def return_cost_next(self, current_node, next_node):
-
-    #     return self.edges[current_node][next_node]
     
-    def return_random_next_not_zero(self, already_visited):
-        """Retorna uma um nó ainda não visitadao na rede e não retorna zero
+    
+    def return_random_next_not_zero(self, already_visited) -> int:
+        """Retorna um possivel proximo node não randomico
         
-        Args:
-            already_visited [list]: lista dos nodes visitados
-        
-        Returns:
-            [int]: proximo node aleatório
+        return:
+            [int]: valor do nó
+            [None]: Se não encontrar um node possivel (visitou todos os nodes)
         """
 
         possibles = [i for i in range(1,self.number_of_nodes)]
@@ -97,45 +95,40 @@ class Graph:
             return None
         return random.choice(return_possibles)
     
-    def return_random_next(self, already_visited):
-        try:
+    def return_all_possibles_nodes(self, already_visited: list) -> list:
+        """retorna todos os nodes possivel para ser adicionado ao caminho
 
-            possibles = np.where(self.edges[already_visited[-1]] != 999 )[0]
-
-        except IndexError:
-            for i in range(len(already_visited)):
-                if already_visited[i]  >= self.number_of_nodes:
-                    already_visited[i] = 0
-
-            possibles = np.where(self.edges[already_visited[-1]] != 999 )[0]
+        Args:
+            
+        
+        return:
+            [list]: lista com os nodes
+        """
+        possibles = [i for i in range(1,self.number_of_nodes)]
+        print(possibles)
         return_possibles = []
         for node in possibles:
             if node not in already_visited:
                 return_possibles.append(node)
-        if not return_possibles:
-            return None
-        return random.choice(return_possibles)
+        return return_possibles
 
+    # def return_cost_next(self, current_node, next_node) -> int:
+    #     return self.edges[current_node][next_node]
+    
+    # def return_random_next(self, already_visited):
+    #     try:
+    #         possibles = np.where(self.edges[already_visited[-1]] != 999 )[0]
 
-# graph = Graph(filename='graph0')
-# possibilidades = graph.return_random_next([0])
-# print(possibilidades)
+    #     except IndexError:
+    #         for i in range(len(already_visited)):
+    #             if already_visited[i]  >= self.number_of_nodes:
+    #                 already_visited[i] = 0
 
-# peso_caminho = 0
-# peso_caminho = 1
-# # ir de 0 a 6
-# # pegar as possibilidade de caminhos
-# possibilidade = graph.return_possible_next(1)
-# percorridos = [0, 1]
-
-# print(possibilidade)
-
-# # pegar as possibilidade de caminhos
-# resultados = np.where(possibilidade != np.inf)
-# # remover nó ido no caminho
-# resultados = np.delete(resultados, percorridos)
-# # escolher aleatoriamento o proximo
-# next_node = random.choice(resultados)
-# percorridos.append(next_node)
-# peso_caminho += possibilidade[next_node]
-
+    #         possibles = np.where(self.edges[already_visited[-1]] != 999 )[0]
+    #     return_possibles = []
+    #     for node in possibles:
+    #         if node not in already_visited:
+    #             return_possibles.append(node)
+    #     if not return_possibles:
+    #         return None
+    #     return random.choice(return_possibles)
