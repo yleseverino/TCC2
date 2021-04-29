@@ -30,9 +30,6 @@ class Ind():
         self.all_nodes_visited_paths = [0]
         self.graph = graph
 
-    def return_paths(self):
-        return self.paths
-    
     def random_append_new_node(self):
         """Adiciona um node para cada caminho
         
@@ -58,6 +55,9 @@ class Ind():
         return self.convert_mtsp_to_tsp()
     
     def convert_mtsp_to_tsp(self):
+        '''Nessa funcção eu pego os caminhos dos carros e converto como se fosse somente um caixeiro viagante,
+        para fazer isso devo adicionar um novo node ficticion que sua distancia deve ser o mesmo com a origem'''
+
         path_mixed = [0]
         cost_mixed = [0]
         for car in self.paths:
@@ -67,7 +67,7 @@ class Ind():
             current_node = car.path[-1]
             next_node = max(self.all_nodes_visited_paths) + 1
             self.all_nodes_visited_paths.append(next_node)
-            cost_node = self.graph.get_cost(current_node,next_node)
+            cost_node = self.graph.get_cost(current_node, next_node)
 
             path_mixed.append(next_node)
             cost_mixed.append(cost_node)

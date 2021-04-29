@@ -58,7 +58,7 @@ class Graph:
     
         """
         try:
-            return self.edges[node_from,node_to]
+            return self.edges[node_from, node_to]
         except IndexError:
             if node_from > self.number_of_nodes:
                 return self.edges[0,node_to]
@@ -86,7 +86,7 @@ class Graph:
             [None]: Se não encontrar um node possivel (visitou todos os nodes)
         """
 
-        possibles = [i for i in range(1,self.number_of_nodes)]
+        possibles = [i for i in range(1,self.number_of_nodes + 1)]
         return_possibles = []
         for node in possibles:
             if node not in already_visited:

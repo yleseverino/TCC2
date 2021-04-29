@@ -1,7 +1,7 @@
 from copy import copy
 from population import Population
 from graph import Graph
-from random import randint
+from random import randint, random
 
 class Genetic:
 
@@ -9,7 +9,7 @@ class Genetic:
         self.population = Population(number_cars)
         self.number_selected = 50
         self.number_population = 50
-        self.number_of_nodes = Graph.number_of_nodes - 1
+        self.number_of_nodes = Graph.number_of_nodes
 
         self.graph = Graph
 
@@ -95,6 +95,12 @@ class Genetic:
         except:
             print(self.selects)
             raise
+    
+    # def mutation(self):
+    #     for ind in self.selects:
+    #         if random > 0.1:
+    #             node1 = randint(0,)
+
     
     def return_best_ind(self):
         route_mixed = self.selects[0][1][1:]
