@@ -1,7 +1,8 @@
 from copy import copy
 from population import Population
 from graph import Graph
-from random import randint, random
+from random import randint, random, choice
+from path import Path
 
 class Genetic:
 
@@ -10,6 +11,8 @@ class Genetic:
         self.number_selected = 50
         self.number_population = 200
         self.number_of_nodes = Graph.number_of_nodes
+
+        self.number_cars = number_cars
 
         self.graph = Graph
 
@@ -20,7 +23,8 @@ class Genetic:
     def create_generation(self):
         self.selection()
         self.SCX_cross_over()
-        self.selects = self.selects[0:self.number_selected] # Filtro os melhores
+        self.mutation()
+        # self.selects = self.selects[0:self.number_selected] # Filtro os melhores
     
     def run(self, number_of_generations = 2000):
         for i in range(number_of_generations):
@@ -96,10 +100,35 @@ class Genetic:
             print(self.selects)
             raise
     
-    # def mutation(self):
-    #     for ind in self.selects:
-    #         if random > 0.1:
-    #             node1 = randint(0,)
+    def mutation(self):
+        '''A mutação nada mais é do que o swap entre 2 elementos do caminho, para fazer esse swap
+        primeiramente é necessario calcular o tamanho da roda representada como caxeiro viagente unitario, que 
+        depende do numero de "carros/caixeiros" especificado antes de rodar o algoritmo '''
+
+        if random() > 0.9:
+
+            ind = choice(self.selects)
+
+            node1 = randint(1, self.number_of_nodes )
+            node2 = randint(1, self.number_of_nodes )
+            while node1 == node2:
+                node2 = randint(1, self.number_of_nodes )
+
+            new_path = copy(ind[1])
+
+            index1 = new_path.index(node1)
+            index2 = new_path.index(node2)
+            
+            new_path[index1], new_path[index2] = new_path[index2], new_path[index1]
+
+            new_path_obj = Path()
+            new_path_obj.create_path(new_path)
+
+            self.selects_routes.append(copy(new_path))
+            self.selects.append( copy((new_path_obj.get_total_cost(), new_path, new_path_obj.cost)) )
+            self.selects = sorted( self.selects, key = lambda t : t[0] )
+
+                
 
     
     def return_best_ind(self):

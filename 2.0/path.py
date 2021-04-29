@@ -20,6 +20,23 @@ class Path():
         self.path = [init_node]
         self.cost = [0]
         self.graph = graph
+    
+    def create_path(self, path_route):
+        """Cria um caminho com o path route"""
+
+        self.path = path_route
+        self.cost = [0]
+        for i in range(len(self.path) - 1):
+            self.cost.append(self.graph.get_cost(self.path[i], self.path[i+1]))
+    
+    def get_total_cost(self) -> int:
+        return sum(self.cost)
+    
+    def get_current_node(self):
+        try:
+            return self.path[-1]
+        except:
+            return self.path[0]
 
     def add(self, node: int, cost : int):
         """adicionar um node ao caminho
@@ -70,12 +87,5 @@ class Path():
 
         return False
     
-    def get_total_cost(self) -> int:
-        return sum(self.cost)
-    
-    def get_current_node(self):
-        try:
-            return self.path[-1]
-        except:
-            return self.path[0]
+
         
