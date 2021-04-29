@@ -8,7 +8,7 @@ class Genetic:
     def __init__(self, number_cars = 3, Graph = Graph()):
         self.population = Population(number_cars)
         self.number_selected = 50
-        self.number_population = 50
+        self.number_population = 200
         self.number_of_nodes = Graph.number_of_nodes
 
         self.graph = Graph
@@ -108,7 +108,7 @@ class Genetic:
         route = []
         for node in route_mixed:
             route.append(node)
-            if node >= self.number_of_nodes:
+            if node > self.number_of_nodes:
                 routes.append(copy(route[:-1]))
                 route = []
         routes.append(route)
