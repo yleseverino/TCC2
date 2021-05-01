@@ -9,7 +9,7 @@ class Genetic:
     def __init__(self, number_cars = 3, Graph = Graph()):
         self.population = Population(number_cars)
         self.number_selected = 50
-        self.number_population = 200
+        self.number_population = 60
         self.number_of_nodes = Graph.number_of_nodes
 
         self.number_cars = number_cars
@@ -22,22 +22,26 @@ class Genetic:
 
     def create_generation(self):
         self.selection()
+
         self.SCX_cross_over()
+
         self.mutation()
         # self.selects = self.selects[0:self.number_selected] # Filtro os melhores
     
     def run(self, number_of_generations = 2000):
         for i in range(number_of_generations):
-            print(f'gerando a geração {i}')
+            print(f'gerando a geração {i + 1}')
             self.create_generation()
+        
 
     # Sequential Constructive Crossover Operator
-    def SCX_cross_over(self, number_cross_over = 50):
+    def SCX_cross_over(self, number_cross_over = 10):
         for i in range(number_cross_over):
 
             # Selecionar 2 individuos randomicamente
             ind1 = 0
             ind2 = 0
+            
             while ind1 == ind2:
                 ind1 = randint(0, self.number_selected - 1)
                 ind2 = randint(0, self.number_selected - 1)
