@@ -17,7 +17,7 @@ struct Graph
     matrix :: Array{Int64, 2}
     number_of_nodes :: Int
     function Graph()
-        matrix = load("graph_m51.jld")["data"]
+        matrix = load("ch150.jld")["data"]
         number_of_nodes = size(matrix)[1]
         new(matrix,number_of_nodes)
     end

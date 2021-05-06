@@ -140,22 +140,32 @@ function mutation!(genetic :: Genetic)
 
             new_ind = total_cost, new_path, cost
             if !(new_ind in genetic.selects)
-                push!(genetic.selects, new_ind)
-                sort!(genetic.selects, by = x -> x[1][1])
+                push!(genetic.selects, deepcopy(new_ind))
             end
         end
     end
+    sort!(genetic.selects, by = x -> x[1][1])
 end
 
 function run!(genetic :: Genetic, number_generations :: Int = 2000)
     for i = 1:number_generations
-        println("Geração :", i)
+        # println("Geração :", i)
         seletion!(g)
         SCX_cross_over!(g)
         mutation!(g)
     end
 end
 
-g = Genetic(3)
-run!(g)
-g.selects
+# g = Genetic(3)
+# run!(g)
+# g.selects
+
+g = Genetic(10)
+resultados = []
+for i = 1:30
+    println("Instância :", i)
+    g = Genetic(10)
+    run!(g)
+    println(g.selects[1][1])
+    push!(resultados,g.selects[1][1])
+end
